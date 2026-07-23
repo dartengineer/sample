@@ -10,7 +10,7 @@
 
 <div class="stage-label">Design Prototype</div>
 <h1 class="stage-title">MATCHDAY <span>— UI/UX System</span></h1>
-<p class="stage-sub">A clickable, low-fidelity → high-fidelity reference build covering the modules in the PRD and Technical Spec. Tap a screen name below to preview it, or use the in-app bottom nav once inside a core tab.</p>
+<p class="stage-sub">A clickable, high-fidelity reference build covering all 21 modules in the Technical Spec — auth, stories, search, events, filters, notification settings, creator earnings, business promotions, and the admin console included. Tap a screen name below to jump to it, or navigate live: icons and buttons throughout the app are wired to their real destination screen.</p>
 
 <div class="navigator" id="navigator"></div>
 
@@ -42,12 +42,63 @@
         <div class="card" style="padding:4px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
           <span class="muted" style="font-size:13px;">Password</span>
         </div>
-        <button class="btn btn-coral" style="margin-bottom:10px;">Log in</button>
-        <button class="btn btn-outline" style="margin-bottom:20px;">
+        <button class="btn btn-coral" style="margin-bottom:10px;" onclick="showScreen('screen-onboarding')">Log in</button>
+        <button class="btn btn-outline" style="margin-bottom:16px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21.6 12.23c0-.68-.06-1.36-.18-2H12v3.79h5.4a4.6 4.6 0 0 1-2 3.02v2.5h3.24c1.9-1.75 2.96-4.33 2.96-7.31z" fill="#F2B134"/><path d="M12 22c2.7 0 4.96-.9 6.6-2.44l-3.23-2.5c-.9.6-2.05.96-3.37.96-2.6 0-4.8-1.75-5.58-4.1H3.07v2.58A10 10 0 0 0 12 22z" fill="#eee"/></svg>
           Continue with Google
         </button>
-        <p class="muted" style="text-align:center;font-size:12.5px;">New here? <span style="color:var(--gold);font-weight:700;">Create an account</span></p>
+        <p class="muted" style="text-align:center;font-size:12px;margin-bottom:6px;cursor:pointer;" onclick="showScreen('screen-reset-password')">Forgot password?</p>
+        <p class="muted" style="text-align:center;font-size:12.5px;">New here? <span style="color:var(--gold);font-weight:700;cursor:pointer;" onclick="showScreen('screen-signup')">Create an account</span></p>
+      </div>
+    </section>
+
+    <!-- ============ SIGNUP ============ -->
+    <section class="screen" id="screen-signup">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header"><div class="icon-btn" onclick="showScreen('screen-login')">←</div></div>
+      <div class="screen-body" style="padding-top:8px;">
+        <p class="eyebrow">Join Matchday</p>
+        <h2 class="h-display" style="font-size:30px;margin-bottom:6px;">Create your<br>account.</h2>
+        <p class="muted" style="font-size:13px;margin-bottom:22px;">You must be 18+ to join Matchday.</p>
+        <div class="field"><label>Full name</label><span class="val placeholder">Your name</span></div>
+        <div class="field"><label>Email</label><span class="val placeholder">you@email.com</span></div>
+        <div class="field"><label>Password</label><span class="val placeholder">••••••••</span></div>
+        <div class="field"><label>Date of birth</label><span class="val placeholder">DD / MM / YYYY</span></div>
+        <button class="btn btn-coral" style="margin-bottom:10px;" onclick="showScreen('screen-otp')">Create account</button>
+        <p class="muted" style="text-align:center;font-size:11px;">By continuing you agree to our Terms & Privacy Policy.</p>
+      </div>
+    </section>
+
+    <!-- ============ OTP VERIFICATION ============ -->
+    <section class="screen" id="screen-otp" style="align-items:center;justify-content:center;text-align:center;">
+      <div class="status-bar" style="position:absolute;top:0;width:100%;"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div style="padding:0 30px;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(46,156,99,.12);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;">✉</div>
+        <h2 class="h-display" style="font-size:26px;margin-bottom:8px;">Verify your email</h2>
+        <p class="muted" style="font-size:13px;margin-bottom:22px;">Enter the 6-digit code we sent to you@email.com</p>
+        <div style="display:flex;gap:8px;margin-bottom:22px;">
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;">2</div>
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;">4</div>
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;">8</div>
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;">1</div>
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;color:var(--slate);">·</div>
+          <div class="field" style="width:38px;text-align:center;padding:10px 0;margin:0;color:var(--slate);">·</div>
+        </div>
+        <button class="btn btn-turf" style="margin-bottom:14px;" onclick="showScreen('screen-onboarding')">Verify & continue</button>
+        <p class="muted" style="font-size:12px;">Didn't get it? <span style="color:var(--gold);font-weight:700;">Resend code</span></p>
+      </div>
+    </section>
+
+    <!-- ============ PASSWORD RESET ============ -->
+    <section class="screen" id="screen-reset-password">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header"><div class="icon-btn" onclick="showScreen('screen-login')">←</div></div>
+      <div class="screen-body" style="padding-top:8px;">
+        <p class="eyebrow">Account recovery</p>
+        <h2 class="h-display" style="font-size:28px;margin-bottom:8px;">Reset your<br>password.</h2>
+        <p class="muted" style="font-size:13px;margin-bottom:22px;">We'll email you a secure link to set a new password.</p>
+        <div class="field"><label>Email</label><span class="val placeholder">you@email.com</span></div>
+        <button class="btn btn-coral">Send reset link</button>
       </div>
     </section>
 
@@ -109,11 +160,35 @@
       <div class="top-header">
         <h2 class="h-display" style="font-size:24px;">Home</h2>
         <div style="display:flex;gap:8px;">
-          <div class="icon-btn">🔍</div>
-          <div class="icon-btn">🔔</div>
+          <div class="icon-btn" onclick="showScreen('screen-search')">🔍</div>
+          <div class="icon-btn" onclick="showScreen('screen-notifications')">🔔</div>
         </div>
       </div>
       <div class="screen-body">
+        <!-- stories rail -->
+        <div class="story-rail">
+          <div class="story-item story-add" onclick="showScreen('screen-story-viewer')">
+            <div class="story-ring seen"><div class="avatar" style="width:100%;height:100%;font-size:13px;">TB</div></div>
+            <div class="story-add-badge">＋</div>
+            <span>Your story</span>
+          </div>
+          <div class="story-item" onclick="showScreen('screen-story-viewer')">
+            <div class="story-ring"><div class="avatar" style="width:100%;height:100%;font-size:13px;background:linear-gradient(135deg,var(--coral),#5b1512);">AM</div></div>
+            <span>Amara</span>
+          </div>
+          <div class="story-item" onclick="showScreen('screen-story-viewer')">
+            <div class="story-ring"><div class="avatar" style="width:100%;height:100%;font-size:13px;background:linear-gradient(135deg,#7a5cff,#241a4d);">PRD</div></div>
+            <span>Predictions</span>
+          </div>
+          <div class="story-item" onclick="showScreen('screen-story-viewer')">
+            <div class="story-ring seen"><div class="avatar" style="width:100%;height:100%;font-size:13px;background:linear-gradient(135deg,var(--turf),#123e27);">LFS</div></div>
+            <span>Lagos FS</span>
+          </div>
+          <div class="story-item" onclick="showScreen('screen-story-viewer')">
+            <div class="story-ring"><div class="avatar" style="width:100%;height:100%;font-size:13px;">PN</div></div>
+            <span>Priye</span>
+          </div>
+        </div>
         <!-- live scoreboard ticker -->
         <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-color:var(--turf);">
           <div style="display:flex;align-items:center;gap:10px;">
@@ -130,10 +205,11 @@
         <div class="card" style="margin-bottom:12px;">
           <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
             <div class="avatar" style="width:38px;height:38px;font-size:13px;">TB</div>
-            <div>
+            <div style="flex:1;">
               <div style="font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:5px;">Tega B. <span class="badge-verified">✓</span></div>
               <div class="muted" style="font-size:11px;">Arsenal Fan Zone · 12m</div>
             </div>
+            <div class="muted" style="font-size:16px;cursor:pointer;letter-spacing:1px;">⋯</div>
           </div>
           <p style="font-size:13.5px;line-height:1.5;margin:0 0 10px;">Saka has been unplayable tonight. That second assist was pure vision 🔥</p>
           <div style="display:flex;gap:16px;color:var(--slate);font-size:12px;">
@@ -143,8 +219,9 @@
 
         <div class="card" style="margin-bottom:12px;">
           <p class="eyebrow" style="color:var(--slate);">Sponsored</p>
-          <div style="height:90px;border-radius:10px;background:linear-gradient(135deg,var(--navy-soft),#0c1420);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
-            <span class="muted" style="font-size:11px;">Ad creative</span>
+          <div style="height:90px;border-radius:10px;background:linear-gradient(135deg,var(--navy-soft),#0c1420);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;margin-bottom:8px;">
+            <span style="font-size:18px;">👕</span>
+            <span class="muted" style="font-size:10.5px;">Ad creative</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <span style="font-size:12.5px;font-weight:700;">JerseyHub — Matchday kits, 20% off</span>
@@ -169,12 +246,79 @@
       <div class="bottom-nav" id="bn-home"></div>
     </section>
 
+    <!-- ============ SEARCH ============ -->
+    <section class="screen" id="screen-search">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header" style="gap:10px;">
+        <div class="icon-btn" onclick="showScreen('screen-home')">←</div>
+        <div style="flex:1;background:var(--navy-card);border:1px solid var(--line);border-radius:100px;padding:9px 16px;font-size:12.5px;color:var(--slate);">🔍 Search people, clubs, communities...</div>
+      </div>
+      <div class="screen-body">
+        <div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;">
+          <span class="chip on">People</span>
+          <span class="chip">Communities</span>
+          <span class="chip">Posts</span>
+          <span class="chip">Clubs</span>
+        </div>
+        <p class="eyebrow">Recent</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <span class="chip">Arsenal ✕</span>
+          <span class="chip">Amara ✕</span>
+          <span class="chip">Lagos Football Socials ✕</span>
+        </div>
+        <p class="eyebrow">People</p>
+        <div style="display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);">
+          <div class="avatar" style="width:40px;height:40px;font-size:13px;background:linear-gradient(135deg,var(--coral),#5b1512);">AM</div>
+          <div style="flex:1;"><div style="font-weight:700;font-size:13px;">Amara</div><div class="muted" style="font-size:11px;">Arsenal · Lagos, NG</div></div>
+          <span class="chip" style="font-size:10.5px;padding:5px 10px;">Follow</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);">
+          <div class="avatar" style="width:40px;height:40px;font-size:13px;">TB</div>
+          <div style="flex:1;"><div style="font-weight:700;font-size:13px;">Tega B.</div><div class="muted" style="font-size:11px;">Arsenal · Lagos, NG</div></div>
+          <span class="chip on" style="font-size:10.5px;padding:5px 10px;">Following</span>
+        </div>
+        <p class="eyebrow" style="margin-top:16px;">Communities</p>
+        <div style="display:flex;gap:12px;align-items:center;padding:9px 0;">
+          <div class="avatar" style="width:40px;height:40px;font-size:13px;background:linear-gradient(135deg,var(--turf),#123e27);">LFS</div>
+          <div style="flex:1;"><div style="font-weight:700;font-size:13px;">Lagos Football Socials</div><div class="muted scoreboard" style="font-size:11px;">9,873 members</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STORY VIEWER ============ -->
+    <section class="screen" id="screen-story-viewer" style="background:linear-gradient(160deg,#243a5c,#0c1420);">
+      <div class="story-progress">
+        <div class="seg done"><i></i></div>
+        <div class="seg active"><i></i></div>
+        <div class="seg"><i></i></div>
+      </div>
+      <div class="top-header" style="position:relative;z-index:5;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="avatar" style="width:30px;height:30px;font-size:11px;background:linear-gradient(135deg,var(--coral),#5b1512);">AM</div>
+          <span style="font-size:12.5px;font-weight:700;">Amara</span>
+          <span class="muted" style="font-size:11px;">4h</span>
+        </div>
+        <div class="icon-btn" onclick="showScreen('screen-home')">✕</div>
+      </div>
+      <div style="flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:90px;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(242,177,52,.25),transparent 55%),radial-gradient(circle at 75% 70%,rgba(226,72,60,.25),transparent 55%);"></div>
+        <div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:15px;">⚽ 🏟️ 🔥</div>
+        <div style="position:relative;z-index:2;max-width:80%;text-align:center;background:rgba(15,27,45,.5);backdrop-filter:blur(2px);padding:12px 18px;border-radius:16px;">
+          <p style="font-size:14px;font-weight:700;margin:0;">Matchday vibes at the fan zone tonight 🔥⚽</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;padding:10px 16px 20px;">
+        <div style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:10px 16px;font-size:12.5px;color:var(--slate);">Send message</div>
+        <div class="icon-btn" style="background:rgba(255,255,255,.08);">♥</div>
+      </div>
+    </section>
+
     <!-- ============ DISCOVER ============ -->
     <section class="screen" id="screen-discover">
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="top-header">
         <h2 class="h-display" style="font-size:24px;">Discover</h2>
-        <div class="icon-btn">⚙︎</div>
+        <div class="icon-btn" onclick="showScreen('screen-discover-filters')">⚙︎</div>
       </div>
       <div class="screen-body" style="padding-bottom:110px;">
         <div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;">
@@ -184,7 +328,8 @@
           <span class="chip">Dating</span>
         </div>
         <div class="card" style="padding:0;overflow:hidden;">
-          <div style="height:340px;background:linear-gradient(160deg,#243a5c,#0c1420);position:relative;">
+          <div style="height:340px;background:linear-gradient(160deg,#243a5c,#0c1420);position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 65% 25%,rgba(46,156,99,.22),transparent 55%);"></div>
             <div style="position:absolute;top:12px;left:12px;" class="chip on">⚽ Arsenal</div>
             <div style="position:absolute;bottom:0;left:0;right:0;padding:18px;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);">
               <div style="display:flex;align-items:baseline;gap:6px;">
@@ -204,12 +349,58 @@
       <div class="bottom-nav" id="bn-discover"></div>
     </section>
 
+    <!-- ============ DISCOVER FILTERS ============ -->
+    <section class="screen" id="screen-discover-filters">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header">
+        <div class="icon-btn" onclick="showScreen('screen-discover')">←</div>
+        <span class="h-display" style="font-size:20px;">Filters</span>
+        <span class="muted" style="font-size:11.5px;cursor:pointer;">Reset</span>
+      </div>
+      <div class="screen-body">
+        <p class="eyebrow">Distance</p>
+        <div class="slider-track"><div class="slider-fill" style="width:40%;"></div><div class="slider-handle" style="left:40%;"></div></div>
+        <div class="muted scoreboard" style="font-size:11px;margin-bottom:20px;">Up to 25 km</div>
+
+        <p class="eyebrow">Age range</p>
+        <div class="slider-track"><div class="slider-fill" style="left:22%;width:35%;"></div><div class="slider-handle" style="left:22%;"></div><div class="slider-handle" style="left:57%;"></div></div>
+        <div class="muted scoreboard" style="font-size:11px;margin-bottom:20px;">22 – 30</div>
+
+        <p class="eyebrow">Show me</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <span class="chip on">Everyone</span>
+          <span class="chip">Dating only</span>
+          <span class="chip">Friends only</span>
+        </div>
+
+        <p class="eyebrow">Favorite club</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <span class="chip on">Arsenal</span>
+          <span class="chip">Chelsea</span>
+          <span class="chip">Barcelona</span>
+          <span class="chip">Man United</span>
+        </div>
+
+        <p class="eyebrow">Interests</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;">
+          <span class="chip on">Watch parties</span>
+          <span class="chip">Predictions</span>
+          <span class="chip">Live commentary</span>
+        </div>
+
+        <button class="btn btn-coral" onclick="showScreen('screen-discover')">Apply filters</button>
+      </div>
+    </section>
+
     <!-- ============ COMMUNITIES ============ -->
     <section class="screen" id="screen-communities">
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="top-header">
         <h2 class="h-display" style="font-size:24px;">Communities</h2>
-        <div class="icon-btn">＋</div>
+        <div style="display:flex;gap:8px;">
+          <div class="icon-btn" onclick="showScreen('screen-events')">📅</div>
+          <div class="icon-btn">＋</div>
+        </div>
       </div>
       <div class="screen-body" style="padding-bottom:110px;">
         <div style="display:flex;gap:8px;margin-bottom:14px;">
@@ -260,7 +451,7 @@
             <span class="scoreboard" style="font-size:24px;color:var(--gold);">2–1</span>
             <span style="font-weight:700;">Chelsea</span>
           </div>
-          <div class="chip" style="width:100%;text-align:center;padding:10px;background:transparent;border-style:dashed;">🎟 Betting — Coming soon</div>
+          <div class="chip" style="width:100%;text-align:center;padding:10px;background:transparent;border-style:dashed;cursor:not-allowed;opacity:.55;">🎟 Betting — Coming soon</div>
         </div>
         <p class="eyebrow">Predict the next goal</p>
         <div class="card" style="margin-bottom:14px;">
@@ -274,6 +465,75 @@
           <span style="font-size:13px;font-weight:700;">Bukayo Saka</span>
           <span class="scoreboard" style="color:var(--gold);font-size:16px;">9.1</span>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ EVENTS ============ -->
+    <section class="screen" id="screen-events">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header">
+        <div class="icon-btn" onclick="showScreen('screen-communities')">←</div>
+        <span class="h-display" style="font-size:20px;">Events</span>
+        <div class="icon-btn">＋</div>
+      </div>
+      <div class="screen-body">
+        <div class="card" style="display:flex;gap:12px;margin-bottom:12px;cursor:pointer;" onclick="showScreen('screen-event-detail')">
+          <div style="width:52px;height:52px;border-radius:12px;background:var(--navy-soft);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="scoreboard" style="font-size:17px;color:var(--gold);">26</span>
+            <span class="muted" style="font-size:9px;text-transform:uppercase;">Jul</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13.5px;margin-bottom:3px;">Arsenal vs Chelsea — Watch Party</div>
+            <div class="muted" style="font-size:11.5px;margin-bottom:6px;">4:00 PM · Lekki Sports Bar, Lagos</div>
+            <span class="ticket-badge paid">$15 ticket</span>
+          </div>
+        </div>
+        <div class="card" style="display:flex;gap:12px;margin-bottom:12px;">
+          <div style="width:52px;height:52px;border-radius:12px;background:var(--navy-soft);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="scoreboard" style="font-size:17px;">02</span>
+            <span class="muted" style="font-size:9px;text-transform:uppercase;">Aug</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13.5px;margin-bottom:3px;">Lagos Football Socials Meetup</div>
+            <div class="muted" style="font-size:11.5px;margin-bottom:6px;">6:00 PM · Freedom Park, Lagos</div>
+            <span class="ticket-badge free">Free · RSVP</span>
+          </div>
+        </div>
+        <div class="card" style="display:flex;gap:12px;">
+          <div style="width:52px;height:52px;border-radius:12px;background:var(--navy-soft);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="scoreboard" style="font-size:17px;">09</span>
+            <span class="muted" style="font-size:9px;text-transform:uppercase;">Aug</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13.5px;margin-bottom:3px;">Predictions League Hangout</div>
+            <div class="muted" style="font-size:11.5px;margin-bottom:6px;">3:00 PM · Online</div>
+            <span class="ticket-badge free">Free · RSVP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EVENT DETAIL ============ -->
+    <section class="screen" id="screen-event-detail">
+      <div class="status-bar" style="position:relative;z-index:5;"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div style="height:150px;background:linear-gradient(160deg,#243a5c,#0c1420);position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(226,72,60,.3),transparent 60%);"></div>
+        <div style="position:absolute;bottom:12px;left:16px;font-size:26px;">🏟️</div>
+        <div class="icon-btn" style="position:absolute;top:14px;left:16px;" onclick="showScreen('screen-events')">←</div>
+        <div class="icon-btn" style="position:absolute;top:14px;right:16px;">🔔</div>
+      </div>
+      <div class="screen-body" style="padding-top:16px;">
+        <span class="ticket-badge paid" style="margin-bottom:8px;display:inline-block;">$15 ticket</span>
+        <h2 class="h-display" style="font-size:24px;margin-bottom:6px;">Arsenal vs Chelsea<br>Watch Party</h2>
+        <p class="muted" style="font-size:12.5px;margin-bottom:16px;">Sat, Jul 26 · 4:00 PM · Lekki Sports Bar, Lagos</p>
+        <div class="card" style="margin-bottom:16px;">
+          <p style="font-size:13px;line-height:1.6;margin:0;">Big screens, matchday snacks, and the whole Arsenal Fan Zone crew in one room. Come early — kickoff seats fill up fast.</p>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <span class="muted" style="font-size:12px;">142 / 200 going</span>
+          <div style="width:120px;height:6px;background:var(--line);border-radius:4px;overflow:hidden;"><div style="width:71%;height:100%;background:var(--turf-light);"></div></div>
+        </div>
+        <button class="btn btn-gold">Buy ticket — $15</button>
       </div>
     </section>
 
@@ -325,7 +585,10 @@
         <div style="align-self:flex-start;max-width:75%;background:var(--navy-card);padding:10px 13px;border-radius:14px 14px 14px 3px;font-size:13px;">Are you coming to the watch party Saturday?</div>
         <div style="align-self:flex-end;max-width:75%;background:var(--coral);padding:10px 13px;border-radius:14px 14px 3px 14px;font-size:13px;">Wouldn't miss it 😄 what time?</div>
         <div style="align-self:flex-start;max-width:75%;background:var(--navy-card);padding:10px 13px;border-radius:14px 14px 14px 3px;font-size:13px;">Kickoff's 4pm, come by 3:30</div>
-        <div style="align-self:flex-end;max-width:75%;background:var(--coral);padding:10px 13px;border-radius:14px 14px 3px 14px;font-size:13px;">Haha okay, see you at the watch party 😂</div>
+        <div style="align-self:flex-end;display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+          <div style="max-width:100%;background:var(--coral);padding:10px 13px;border-radius:14px 14px 3px 14px;font-size:13px;">Haha okay, see you at the watch party 😂</div>
+          <span class="receipt-check">✓✓ Read</span>
+        </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;padding:10px 16px 18px;border-top:1px solid var(--line);">
         <div class="icon-btn">🎤</div>
@@ -338,7 +601,7 @@
     <!-- ============ NOTIFICATIONS ============ -->
     <section class="screen" id="screen-notifications">
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
-      <div class="top-header"><h2 class="h-display" style="font-size:24px;">Notifications</h2></div>
+      <div class="top-header"><h2 class="h-display" style="font-size:24px;">Notifications</h2><div class="icon-btn" onclick="showScreen('screen-notif-settings')">⚙︎</div></div>
       <div class="screen-body">
         <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center;">
           <div style="width:34px;height:34px;border-radius:50%;background:rgba(226,72,60,.15);display:flex;align-items:center;justify-content:center;">♥</div>
@@ -360,10 +623,31 @@
       <div class="bottom-nav" id="bn-notifications-x" style="display:none;"></div>
     </section>
 
+    <!-- ============ NOTIFICATION SETTINGS ============ -->
+    <section class="screen" id="screen-notif-settings">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header">
+        <div class="icon-btn" onclick="showScreen('screen-notifications')">←</div>
+        <span class="h-display" style="font-size:20px;">Notification settings</span>
+      </div>
+      <div class="screen-body">
+        <div class="toggle-row"><div><div class="t-label">Likes</div></div><div class="switch on"></div></div>
+        <div class="toggle-row"><div><div class="t-label">Comments</div></div><div class="switch on"></div></div>
+        <div class="toggle-row"><div><div class="t-label">New followers</div></div><div class="switch"></div></div>
+        <div class="toggle-row"><div><div class="t-label">Matches</div></div><div class="switch on"></div></div>
+        <div class="toggle-row"><div><div class="t-label">Community activity</div></div><div class="switch"></div></div>
+        <div class="toggle-row"><div><div class="t-label">Live alerts</div></div><div class="switch on"></div></div>
+        <div class="toggle-row">
+          <div><div class="t-label">Messages & calls</div><div class="t-sub">Always sends a push notification</div></div>
+          <div class="switch on" style="opacity:.5;"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ PROFILE ============ -->
     <section class="screen" id="screen-profile">
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
-      <div class="top-header"><h2 class="h-display" style="font-size:24px;">Profile</h2><div class="icon-btn">⚙︎</div></div>
+      <div class="top-header"><h2 class="h-display" style="font-size:24px;">Profile</h2><div class="icon-btn" onclick="showScreen('screen-notif-settings')">⚙︎</div></div>
       <div class="screen-body" style="padding-bottom:110px;">
         <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:16px;">
           <div class="avatar" style="width:84px;height:84px;font-size:26px;background:linear-gradient(135deg,var(--coral),var(--turf));margin-bottom:10px;">TB</div>
@@ -374,18 +658,71 @@
           <span class="muted" style="font-size:12.5px;">Arsenal · Lagos, NG</span>
         </div>
         <div style="display:flex;justify-content:space-around;margin-bottom:18px;">
-          <div style="text-align:center;"><div class="scoreboard" style="font-size:19px;color:var(--gold);">6,240</div><div class="muted" style="font-size:10.5px;">FOLLOWERS</div></div>
-          <div style="text-align:center;"><div class="scoreboard" style="font-size:19px;">312</div><div class="muted" style="font-size:10.5px;">FOLLOWING</div></div>
+          <div style="text-align:center;cursor:pointer;"><div class="scoreboard" style="font-size:19px;color:var(--gold);">6,240</div><div class="muted" style="font-size:10.5px;">FOLLOWERS</div></div>
+          <div style="text-align:center;cursor:pointer;"><div class="scoreboard" style="font-size:19px;">312</div><div class="muted" style="font-size:10.5px;">FOLLOWING</div></div>
           <div style="text-align:center;"><div class="scoreboard" style="font-size:19px;">148</div><div class="muted" style="font-size:10.5px;">POSTS</div></div>
         </div>
-        <div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+        <div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="showScreen('screen-earnings')">
           <span style="font-size:12.5px;">Creator status</span>
-          <span class="chip on" style="font-size:11px;">Earning · 40% tier</span>
+          <span class="chip on" style="font-size:11px;">Earning · 40% tier ›</span>
         </div>
-        <button class="btn btn-outline" style="margin-bottom:10px;">Edit profile</button>
-        <button class="btn btn-gold">Go live</button>
+        <button class="btn btn-outline" style="margin-bottom:10px;" onclick="showScreen('screen-edit-profile')">Edit profile</button>
+        <button class="btn btn-gold" style="margin-bottom:18px;" onclick="showScreen('screen-golive-gate')">Go live</button>
+
+        <div class="admin-row" style="cursor:pointer;" onclick="showScreen('screen-wallet')">
+          <span style="font-size:14px;">💰</span><span style="flex:1;font-size:13px;font-weight:600;">Wallet</span><span class="muted">›</span>
+        </div>
+        <div class="admin-row" style="cursor:pointer;" onclick="showScreen('screen-verification')">
+          <span style="font-size:14px;">✓</span><span style="flex:1;font-size:13px;font-weight:600;">Verification</span><span class="muted">›</span>
+        </div>
+        <div class="admin-row" style="cursor:pointer;" onclick="showScreen('screen-premium')">
+          <span style="font-size:14px;">★</span><span style="flex:1;font-size:13px;font-weight:600;">Go Premium</span><span class="muted">›</span>
+        </div>
+        <div class="admin-row" style="cursor:pointer;" onclick="showScreen('screen-business-promo')">
+          <span style="font-size:14px;">📣</span><span style="flex:1;font-size:13px;font-weight:600;">Promote a business</span><span class="muted">›</span>
+        </div>
       </div>
       <div class="bottom-nav" id="bn-profile"></div>
+    </section>
+
+    <!-- ============ EDIT PROFILE ============ -->
+    <section class="screen" id="screen-edit-profile">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header">
+        <div class="icon-btn" onclick="showScreen('screen-profile')">←</div>
+        <span class="h-display" style="font-size:20px;">Edit profile</span>
+        <span style="font-size:12.5px;color:var(--gold);font-weight:700;cursor:pointer;" onclick="showScreen('screen-profile')">Save</span>
+      </div>
+      <div class="screen-body">
+        <p class="muted scoreboard" style="font-size:11px;margin-bottom:6px;">PROFILE 82% COMPLETE</p>
+        <div style="height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:18px;"><div style="width:82%;height:100%;background:var(--turf-light);"></div></div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+          <div style="aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,var(--coral),var(--turf));position:relative;">
+            <span style="position:absolute;bottom:4px;left:6px;font-size:9px;background:rgba(0,0,0,.45);color:#fff;padding:2px 6px;border-radius:6px;">Main</span>
+          </div>
+          <div style="aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#2c3f66,#101a2c);display:flex;align-items:center;justify-content:center;color:var(--slate);font-size:18px;">🖼</div>
+          <div style="aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#3a2c5c,#151022);display:flex;align-items:center;justify-content:center;color:var(--slate);font-size:18px;">🖼</div>
+          <div style="aspect-ratio:1;border-radius:12px;border:1.5px dashed var(--line-strong);display:flex;align-items:center;justify-content:center;color:var(--slate);font-size:20px;">＋</div>
+        </div>
+
+        <div class="field"><label>Bio</label><span class="val placeholder">Tell your community about yourself...</span></div>
+        <div class="field"><label>Occupation</label><span class="val">Product designer</span></div>
+        <div class="field"><label>Location</label><span class="val">Lagos, NG</span></div>
+
+        <p class="eyebrow">Gender</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <span class="chip on">Man</span><span class="chip">Woman</span><span class="chip">Non-binary</span>
+        </div>
+        <p class="eyebrow">Favorite club</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <span class="chip on">Arsenal</span><span class="chip">Change</span>
+        </div>
+        <p class="eyebrow">Relationship goal</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="chip">New friends</span><span class="chip on">Dating</span><span class="chip">Not sure yet</span>
+        </div>
+      </div>
     </section>
 
     <!-- ============ WALLET ============ -->
@@ -393,7 +730,7 @@
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="screen-body" style="padding-top:8px;padding-bottom:110px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-          <div class="icon-btn">←</div>
+          <div class="icon-btn" onclick="showScreen('screen-profile')">←</div>
           <span class="h-display" style="font-size:20px;">Wallet</span>
         </div>
         <div class="card" style="text-align:center;background:linear-gradient(135deg,var(--navy-card),#0c1420);margin-bottom:16px;">
@@ -416,6 +753,38 @@
       <div class="bottom-nav" id="bn-wallet" style="display:none;"></div>
     </section>
 
+    <!-- ============ CREATOR EARNINGS ============ -->
+    <section class="screen" id="screen-earnings">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="screen-body" style="padding-top:8px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <div class="icon-btn" onclick="showScreen('screen-profile')">←</div>
+          <span class="h-display" style="font-size:20px;">Earnings</span>
+        </div>
+        <div class="card" style="text-align:center;background:linear-gradient(135deg,var(--navy-card),#0c1420);margin-bottom:14px;">
+          <p class="eyebrow">Accrued balance</p>
+          <div class="scoreboard" style="font-size:34px;color:var(--gold);">$186.40</div>
+          <span class="chip on" style="font-size:11px;margin-top:6px;display:inline-block;">40% tier · 10,000+ followers</span>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+          <p class="eyebrow">Next tier — 50%</p>
+          <div style="height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="width:12%;height:100%;background:var(--turf-light);"></div></div>
+          <div class="muted scoreboard" style="font-size:11px;">10,600 / 15,000 followers</div>
+        </div>
+        <div class="card" style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-weight:700;font-size:13px;">Next payout</div>
+            <div class="muted" style="font-size:11.5px;">Aug 1 · $10 minimum to withdraw</div>
+          </div>
+          <span class="chip on" style="font-size:11px;">✓ Eligible</span>
+        </div>
+        <p class="eyebrow">Recent earnings</p>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line);"><span>🦁 Lion from @priye</span><span style="color:var(--turf-light);">+$200.00</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line);"><span>🐯 Tiger from @amara</span><span style="color:var(--turf-light);">+$80.00</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;padding:8px 0;"><span>🐐 Goat from @priye</span><span style="color:var(--turf-light);">+$20.00</span></div>
+      </div>
+    </section>
+
     <!-- ============ LIVE ============ -->
     <section class="screen" id="screen-live" style="background:#05090f;">
       <div style="position:relative;height:100%;background:radial-gradient(circle at 50% 20%, #1c3a2a 0%, #05090f 65%);">
@@ -425,7 +794,7 @@
             <span class="badge-live">● LIVE</span>
             <span class="scoreboard" style="font-size:12px;">👁 3,204</span>
           </div>
-          <div class="icon-btn">✕</div>
+          <div class="icon-btn" onclick="showScreen('screen-home')">✕</div>
         </div>
         <div style="position:absolute;bottom:120px;left:16px;display:flex;flex-direction:column;gap:6px;max-width:70%;">
           <div style="background:rgba(15,27,45,.55);backdrop-filter:blur(2px);padding:6px 10px;border-radius:10px;font-size:11.5px;">Amara sent 🐐 Goat</div>
@@ -464,7 +833,7 @@
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="screen-body" style="padding-top:8px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
-          <div class="icon-btn">✕</div>
+          <div class="icon-btn" onclick="showScreen('screen-profile')">✕</div>
         </div>
         <div style="text-align:center;margin-bottom:22px;">
           <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--gold),#7a5a12);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;">★</div>
@@ -493,7 +862,7 @@
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="screen-body" style="padding-top:8px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
-          <div class="icon-btn">←</div>
+          <div class="icon-btn" onclick="showScreen('screen-profile')">←</div>
           <span class="h-display" style="font-size:20px;">Verification</span>
         </div>
         <div class="card" style="margin-bottom:16px;">
@@ -507,6 +876,76 @@
           <p class="eyebrow">Or get it now</p>
           <p style="font-size:13px;margin:0 0 14px;">Skip the wait with paid verification, billed monthly. Cancels automatically once you hit 20,000 followers.</p>
           <button class="btn btn-turf">Verify now — billed monthly</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BUSINESS PROMOTION ============ -->
+    <section class="screen" id="screen-business-promo">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="screen-body" style="padding-top:8px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <div class="icon-btn" onclick="showScreen('screen-profile')">←</div>
+          <span class="h-display" style="font-size:20px;">Promote your business</span>
+        </div>
+        <p class="muted" style="font-size:13px;margin-bottom:18px;">Boost visibility in Discover, Search, and the Home Feed for a set duration.</p>
+
+        <div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;font-size:13.5px;">Starter</div><div class="muted" style="font-size:11.5px;">2× visibility · 7 days</div></div>
+          <span class="scoreboard" style="color:var(--gold);font-size:16px;">$20</span>
+        </div>
+        <div class="card" style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border-color:var(--turf);">
+          <div><div style="font-weight:700;font-size:13.5px;">Growth</div><div class="muted" style="font-size:11.5px;">4× visibility · 14 days</div></div>
+          <span class="scoreboard" style="color:var(--gold);font-size:16px;">$50</span>
+        </div>
+        <div class="card" style="margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;font-size:13.5px;">Featured</div><div class="muted" style="font-size:11.5px;">8× visibility · 30 days</div></div>
+          <span class="scoreboard" style="color:var(--gold);font-size:16px;">$120</span>
+        </div>
+        <button class="btn btn-gold">Boost my profile</button>
+      </div>
+    </section>
+
+    <!-- ============ ADMIN CONSOLE ============ -->
+    <section class="screen" id="screen-admin">
+      <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
+      <div class="top-header">
+        <span class="h-display" style="font-size:20px;">Admin Console</span>
+        <div class="avatar" style="width:30px;height:30px;font-size:11px;background:linear-gradient(135deg,var(--gold),#7a5a12);color:#1a1305;">AD</div>
+      </div>
+      <div class="screen-body">
+        <div style="display:flex;gap:8px;margin-bottom:18px;">
+          <div class="stat-mini"><div class="scoreboard" style="font-size:18px;color:var(--coral);">14</div><div class="muted" style="font-size:9.5px;">REPORTS</div></div>
+          <div class="stat-mini"><div class="scoreboard" style="font-size:18px;color:var(--gold);">6</div><div class="muted" style="font-size:9.5px;">FLAGGED</div></div>
+          <div class="stat-mini"><div class="scoreboard" style="font-size:18px;color:var(--turf-light);">412</div><div class="muted" style="font-size:9.5px;">CREATORS</div></div>
+        </div>
+
+        <p class="eyebrow">Moderation queue</p>
+        <div class="admin-row">
+          <div class="avatar" style="width:32px;height:32px;font-size:11px;">TB</div>
+          <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;">Post reported — spam</div><div class="muted" style="font-size:10.5px;">Tega B. · Arsenal Fan Zone</div></div>
+          <button class="pill-btn pill-reject">Remove</button>
+          <button class="pill-btn pill-approve">Keep</button>
+        </div>
+        <div class="admin-row">
+          <div class="avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,var(--coral),#5b1512);">AM</div>
+          <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;">Photo flagged — moderation AI</div><div class="muted" style="font-size:10.5px;">Amara · Profile photo</div></div>
+          <button class="pill-btn pill-reject">Remove</button>
+          <button class="pill-btn pill-approve">Keep</button>
+        </div>
+
+        <p class="eyebrow" style="margin-top:16px;">Payout run</p>
+        <div class="card" style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-weight:700;font-size:13px;">August payout</div><div class="muted" style="font-size:11.5px;">412 creators · $18,204 total</div></div>
+          <button class="pill-btn pill-approve" style="padding:8px 14px;">Approve</button>
+        </div>
+
+        <p class="eyebrow">Ad campaign approvals</p>
+        <div class="admin-row">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--navy-soft);display:flex;align-items:center;justify-content:center;font-size:13px;">📣</div>
+          <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;">JerseyHub — matchday kits</div><div class="muted" style="font-size:10.5px;">Budget $500 · CPC 8¢</div></div>
+          <button class="pill-btn pill-reject">Reject</button>
+          <button class="pill-btn pill-approve">Approve</button>
         </div>
       </div>
     </section>
