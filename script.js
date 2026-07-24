@@ -20,6 +20,7 @@ const screens = [
   { id: 'screen-notif-settings', label: 'Notification settings' },
   { id: 'screen-profile', label: 'Profile', hasNav: true },
   { id: 'screen-edit-profile', label: 'Edit profile' },
+  { id: 'screen-themes', label: 'Appearance' },
   { id: 'screen-wallet', label: 'Wallet' },
   { id: 'screen-earnings', label: 'Earnings' },
   { id: 'screen-live', label: 'Live stream' },
@@ -75,9 +76,10 @@ screens.forEach(s => {
   navEl.appendChild(pill);
 });
 
-
-
-
-
-
-
+// ---- Theme switching (4 themes derived from the Connect logo) ----
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-swatch').forEach(el => {
+    el.classList.toggle('active', el.dataset.theme === theme);
+  });
+}
