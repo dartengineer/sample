@@ -141,6 +141,12 @@
   width: auto;
 }
 
+.comment-item.new { animation: popIn .45s cubic-bezier(.2,.9,.2,1); }
+@keyframes popIn { from { transform: translateY(8px) scale(.98); opacity: 0 } to { transform: none; opacity: 1 } }
+.comment-item .post-like { background: transparent; border: none; color: var(--slate); cursor: pointer; font-weight: 700 }
+.comment-item .post-like.on { color: var(--coral); }
+.view-all { font-size: 13px }
+
 /* create-post form polish */
 .create-wrapper .card {
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.5);

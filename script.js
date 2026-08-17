@@ -89,6 +89,9 @@ function escapeHTML(s) { if (!s) return ''; return s.replace(/&/g, '&amp;').repl
 
 function getPosts() { try { return JSON.parse(localStorage.getItem('posts') || '[]'); } catch (e) { return []; } }
 
+// tracks which posts have their full comment thread expanded
+const showAllComments = {};
+
 function renderPosts() {
   const container = document.getElementById('posts-feed');
   if (!container) return;
@@ -113,7 +116,7 @@ function renderPosts() {
         <div class="post-actions">
           <button class="post-like ${likes > 0 ? 'on' : ''}" onclick="toggleLike(${p.id})">♡ ${likes}</button>
           <button onclick="toggleComment(${p.id})">💬 ${comments.length}</button>
-          <button onclick="navigator.share ? navigator.share({text: '${escapeHTML(p.caption).replace(/'/g, "\'")}'}) : alert('Share not supported')">↗ Share</button>
+          <button onclick="navigator.share ? navigator.share({text: '${escapeHTML(p.caption).replace(/'/g, "\\'")}'}) : alert('Share not supported')">↗ Share</button>
         </div>
         <div id="comments-${p.id}" class="comments-section">
           ${renderCommentsHtml(p)}
@@ -134,11 +137,31 @@ function toggleComment(id) {
 function renderCommentsHtml(post) {
   const comments = post.comments || [];
   const visible = openCommentPost === post.id;
-  const commentsHtml = comments.slice(-3).map(c => {
-    return `<div class="comment-item"><div class="comment-author">${escapeHTML(c.author)}</div><div class="comment-time muted">${new Date(c.time).toLocaleTimeString()}</div><div class="comment-text">${escapeHTML(c.text)}</div></div>`;
+  const total = comments.length;
+  const showAll = !!showAllComments[post.id];
+  const list = showAll ? comments : comments.slice(-3);
+  const commentsHtml = list.map(c => {
+    return `<div id="comment-${c.id}" class="comment-item">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+          <div>
+            <div class="comment-author">${escapeHTML(c.author)}</div>
+            <div class="comment-time muted">${new Date(c.time).toLocaleTimeString()}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="post-like ${c.userLiked? 'on':''}" onclick="toggleCommentLike(${post.id}, ${c.id})">♡ ${c.likes||0}</button>
+            <button onclick="replyToComment(${post.id}, ${c.id})">Reply</button>
+            ${c.author === 'You' ? `<button onclick="deleteComment(${post.id}, ${c.id})">Delete</button>` : ''}
+          </div>
+        </div>
+        <div class="comment-text">${escapeHTML(c.text)}</div>
+      </div>`;
   }).join('');
+
+  const viewAllHtml = total > 3 ? `<div class="view-all" style="margin-bottom:8px;cursor:pointer;color:var(--slate);font-weight:700;" onclick="toggleViewAllComments(${post.id})">${showAll ? 'Hide' : 'View all ' + total + ' comments'}</div>` : '';
+
   return `
     <div class="comments-list" style="display:${visible ? 'block' : 'none'};">
+      ${viewAllHtml}
       ${commentsHtml}
       <div class="comment-input-row">
         <input id="comment-input-${post.id}" placeholder="Write a comment..." />
@@ -156,10 +179,54 @@ function addComment(postId) {
   const idx = posts.findIndex(p => p.id == postId);
   if (idx === -1) return;
   posts[idx].comments = posts[idx].comments || [];
-  posts[idx].comments.push({ id: Date.now(), author: 'You', text, time: new Date().toISOString() });
+  const newComment = { id: Date.now(), author: 'You', text, time: new Date().toISOString(), likes: 0, userLiked: false };
+  posts[idx].comments.push(newComment);
   localStorage.setItem('posts', JSON.stringify(posts));
   input.value = '';
   openCommentPost = postId;
+  renderPosts();
+  // after render, scroll to the new comment and animate it
+  setTimeout(()=>{
+    const el = document.getElementById('comment-' + newComment.id);
+    if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.add('new'); setTimeout(()=>el.classList.remove('new'),1200); }
+  },60);
+}
+
+function toggleCommentLike(postId, commentId){
+  const posts = getPosts();
+  const pIdx = posts.findIndex(p=>p.id==postId);
+  if(pIdx===-1) return;
+  const cIdx = (posts[pIdx].comments||[]).findIndex(c=>c.id==commentId);
+  if(cIdx===-1) return;
+  const comment = posts[pIdx].comments[cIdx];
+  if(comment.userLiked){ comment.userLiked = false; comment.likes = Math.max(0,(comment.likes||1)-1); }
+  else { comment.userLiked = true; comment.likes = (comment.likes||0)+1; }
+  localStorage.setItem('posts', JSON.stringify(posts));
+  renderPosts();
+}
+
+function replyToComment(postId, commentId){
+  const posts = getPosts();
+  const p = posts.find(p=>p.id==postId);
+  if(!p) return;
+  const c = (p.comments||[]).find(c=>c.id==commentId);
+  if(!c) return;
+  openCommentPost = postId;
+  renderPosts();
+  setTimeout(()=>{
+    const input = document.getElementById('comment-input-' + postId);
+    if(!input) return;
+    input.value = `@${c.author} `;
+    input.focus();
+  },40);
+}
+
+function deleteComment(postId, commentId){
+  const posts = getPosts();
+  const pIdx = posts.findIndex(p=>p.id==postId);
+  if(pIdx===-1) return;
+  posts[pIdx].comments = (posts[pIdx].comments||[]).filter(c=>c.id!=commentId);
+  localStorage.setItem('posts', JSON.stringify(posts));
   renderPosts();
 }
 
@@ -169,6 +236,11 @@ function toggleLike(id) {
   if (idx === -1) return;
   posts[idx].likes = (posts[idx].likes || 0) + 1;
   localStorage.setItem('posts', JSON.stringify(posts));
+  renderPosts();
+}
+
+function toggleViewAllComments(postId){
+  showAllComments[postId] = !showAllComments[postId];
   renderPosts();
 }
 
