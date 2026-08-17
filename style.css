@@ -86,6 +86,61 @@
   object-fit: cover;
 }
 
+.comments-section {
+  margin-top: 10px;
+}
+
+.comments-list {
+  display: block;
+  margin-top: 8px;
+}
+
+.comment-item {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.comment-time {
+  font-size: 11px;
+  color: var(--slate);
+  margin-top: 2px;
+}
+
+.comment-text {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--chalk);
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.comment-input-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
+  color: var(--chalk);
+  outline: none;
+}
+
+.comment-input-row .btn {
+  padding: 8px 12px;
+  width: auto;
+}
+
 /* create-post form polish */
 .create-wrapper .card {
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.5);

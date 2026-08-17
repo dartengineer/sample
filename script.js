@@ -97,6 +97,7 @@ function renderPosts() {
   container.innerHTML = posts.map(p => {
     const mediaHtml = p.media ? (`<div class="post-media">${p.mediaType && p.mediaType.indexOf('video') === 0 ? `<video src="${p.media}" controls muted playsinline preload="metadata"></video>` : `<img src="${p.media}" alt="post media">`}</div>`) : '';
     const likes = p.likes || 0;
+    const comments = p.comments || [];
     return `
       <div class="card post-card" style="margin-bottom:12px;">
         <div class="post-meta">
@@ -111,12 +112,55 @@ function renderPosts() {
         ${mediaHtml}
         <div class="post-actions">
           <button class="post-like ${likes > 0 ? 'on' : ''}" onclick="toggleLike(${p.id})">♡ ${likes}</button>
-          <button onclick="alert('Comments not implemented in demo')">💬 0</button>
+          <button onclick="toggleComment(${p.id})">💬 ${comments.length}</button>
           <button onclick="navigator.share ? navigator.share({text: '${escapeHTML(p.caption).replace(/'/g, "\'")}'}) : alert('Share not supported')">↗ Share</button>
+        </div>
+        <div id="comments-${p.id}" class="comments-section">
+          ${renderCommentsHtml(p)}
         </div>
       </div>`;
   }).join('');
   // after rendering, attach any behavior if needed
+}
+
+// track which post's comment box is open
+let openCommentPost = null;
+
+function toggleComment(id) {
+  openCommentPost = openCommentPost === id ? null : id;
+  renderPosts();
+}
+
+function renderCommentsHtml(post) {
+  const comments = post.comments || [];
+  const visible = openCommentPost === post.id;
+  const commentsHtml = comments.slice(-3).map(c => {
+    return `<div class="comment-item"><div class="comment-author">${escapeHTML(c.author)}</div><div class="comment-time muted">${new Date(c.time).toLocaleTimeString()}</div><div class="comment-text">${escapeHTML(c.text)}</div></div>`;
+  }).join('');
+  return `
+    <div class="comments-list" style="display:${visible ? 'block' : 'none'};">
+      ${commentsHtml}
+      <div class="comment-input-row">
+        <input id="comment-input-${post.id}" placeholder="Write a comment..." />
+        <button class="btn btn-coral" onclick="addComment(${post.id})">Reply</button>
+      </div>
+    </div>`;
+}
+
+function addComment(postId) {
+  const input = document.getElementById('comment-input-' + postId);
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const posts = getPosts();
+  const idx = posts.findIndex(p => p.id == postId);
+  if (idx === -1) return;
+  posts[idx].comments = posts[idx].comments || [];
+  posts[idx].comments.push({ id: Date.now(), author: 'You', text, time: new Date().toISOString() });
+  localStorage.setItem('posts', JSON.stringify(posts));
+  input.value = '';
+  openCommentPost = postId;
+  renderPosts();
 }
 
 function toggleLike(id) {
