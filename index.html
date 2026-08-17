@@ -165,9 +165,12 @@
       <div class="status-bar"><span>9:41</span><span>●●●●  Wi-Fi  100%</span></div>
       <div class="top-header">
         <h2 class="h-display" style="font-size:24px;">Home</h2>
-        <div style="display:flex;gap:8px;">
-          <div class="icon-btn" onclick="showScreen('screen-search')">🔍</div>
-          <div class="icon-btn" onclick="showScreen('screen-notifications')">🔔</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div class="icon-btn" id="create-post-btn" title="Create post" onclick="window.location.href='create-post.html'">＋</div>
+          <div style="display:flex;gap:8px;">
+            <div class="icon-btn" onclick="showScreen('screen-search')">🔍</div>
+            <div class="icon-btn" onclick="showScreen('screen-notifications')">🔔</div>
+          </div>
         </div>
       </div>
       <div class="screen-body">
@@ -195,6 +198,9 @@
             <span>Priye</span>
           </div>
         </div>
+
+        <!-- user posts feed (populated from localStorage) -->
+        <div id="posts-feed" class="posts-feed" style="margin-bottom:12px;"></div>
         <!-- live scoreboard ticker -->
         <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-color:var(--turf);">
           <div style="display:flex;align-items:center;gap:10px;">

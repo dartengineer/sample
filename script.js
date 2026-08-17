@@ -64,6 +64,7 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav-pill').forEach(p => p.classList.toggle('active', p.dataset.id === id));
+  if (id === 'screen-home') renderPosts();
 }
 
 const navEl = document.getElementById('navigator');
@@ -83,3 +84,49 @@ function setTheme(theme) {
     el.classList.toggle('active', el.dataset.theme === theme);
   });
 }
+
+function escapeHTML(s) { if (!s) return ''; return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+
+function getPosts() { try { return JSON.parse(localStorage.getItem('posts') || '[]'); } catch (e) { return []; } }
+
+function renderPosts() {
+  const container = document.getElementById('posts-feed');
+  if (!container) return;
+  const posts = getPosts();
+  if (!posts || posts.length === 0) { container.innerHTML = '<div class="card" style="text-align:center;color:var(--slate);">No posts yet — be the first to create one.</div>'; return; }
+  container.innerHTML = posts.map(p => {
+    const mediaHtml = p.media ? (`<div class="post-media">${p.mediaType && p.mediaType.indexOf('video') === 0 ? `<video src="${p.media}" controls muted playsinline preload="metadata"></video>` : `<img src="${p.media}" alt="post media">`}</div>`) : '';
+    const likes = p.likes || 0;
+    return `
+      <div class="card post-card" style="margin-bottom:12px;">
+        <div class="post-meta">
+          <div class="avatar" style="width:44px;height:44px;font-size:15px;">${escapeHTML((p.author || 'You').slice(0, 2))}</div>
+          <div style="flex:1;">
+            <div class="author">${escapeHTML(p.author || 'You')}</div>
+            <div class="time muted">${new Date(p.time).toLocaleString()}</div>
+          </div>
+          <div class="muted" style="font-size:16px;cursor:pointer;letter-spacing:1px;">⋯</div>
+        </div>
+        <div class="post-caption">${escapeHTML(p.caption)}</div>
+        ${mediaHtml}
+        <div class="post-actions">
+          <button class="post-like ${likes > 0 ? 'on' : ''}" onclick="toggleLike(${p.id})">♡ ${likes}</button>
+          <button onclick="alert('Comments not implemented in demo')">💬 0</button>
+          <button onclick="navigator.share ? navigator.share({text: '${escapeHTML(p.caption).replace(/'/g, "\'")}'}) : alert('Share not supported')">↗ Share</button>
+        </div>
+      </div>`;
+  }).join('');
+  // after rendering, attach any behavior if needed
+}
+
+function toggleLike(id) {
+  const posts = getPosts();
+  const idx = posts.findIndex(p => p.id == id);
+  if (idx === -1) return;
+  posts[idx].likes = (posts[idx].likes || 0) + 1;
+  localStorage.setItem('posts', JSON.stringify(posts));
+  renderPosts();
+}
+
+// render posts on first load
+document.addEventListener('DOMContentLoaded', () => { renderPosts(); });

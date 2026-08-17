@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Create Post — Connect</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    .create-wrapper{max-width:420px;margin:28px auto;padding:18px;}
+    .media-preview{width:100%;border-radius:12px;margin-top:10px;max-height:420px;object-fit:cover}
+  </style>
+</head>
+<body>
+  <div class="create-wrapper">
+    <h2 class="h-display" style="font-size:24px;margin-bottom:8px;color:var(--chalk);">Create post</h2>
+    <p class="muted" style="margin-bottom:12px;">Share a short video or caption with your community.</p>
+
+    <div class="card">
+      <div class="field">
+        <label>Caption</label>
+        <textarea id="caption" rows="4" placeholder="What's happening?" style="width:100%;background:transparent;border:none;color:var(--chalk);resize:vertical;outline:none;font-size:14px;"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Media (optional)</label>
+        <div class="file-input-row">
+          <input type="file" id="media" accept="video/*,image/*">
+          <button type="button" class="remove-media" id="removeMedia" style="display:none;">Remove</button>
+        </div>
+        <div id="preview"></div>
+      </div>
+
+      <button class="btn btn-coral" id="submitBtn">Post</button>
+      <button class="btn btn-outline" id="cancelBtn" style="margin-top:8px;">Cancel</button>
+    </div>
+    <p style="margin-top:12px;color:var(--slate);font-size:12px;">Posts are saved to your browser for this demo.</p>
+  </div>
+
+  <script>
+    const mediaInput = document.getElementById('media');
+    const preview = document.getElementById('preview');
+    let selectedData = null;
+
+    mediaInput.addEventListener('change', e=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f){ preview.innerHTML=''; selectedData = null; return; }
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        selectedData = { data: reader.result, type: f.type };
+        document.getElementById('removeMedia').style.display = 'inline-block';
+        if(f.type.indexOf('video')===0){ preview.innerHTML = `<video class="media-preview" src="${reader.result}" controls muted playsinline></video>`; }
+        else { preview.innerHTML = `<img class="media-preview" src="${reader.result}" alt="preview">`; }
+      };
+      reader.readAsDataURL(f);
+    });
+
+    document.getElementById('removeMedia').addEventListener('click', ()=>{
+      selectedData = null; preview.innerHTML=''; mediaInput.value=''; document.getElementById('removeMedia').style.display='none';
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', ()=>{
+      const caption = document.getElementById('caption').value.trim();
+      const post = { id: Date.now(), author: 'You', time: new Date().toISOString(), caption, media: selectedData ? selectedData.data : null, mediaType: selectedData ? selectedData.type : null };
+      try{
+        const posts = JSON.parse(localStorage.getItem('posts')||'[]');
+        posts.unshift(post);
+        localStorage.setItem('posts', JSON.stringify(posts));
+      }catch(e){ localStorage.setItem('posts', JSON.stringify([post])); }
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', ()=>{ window.location.href='index.html'; });
+  </script>
+</body>
+</html>
