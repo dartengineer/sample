@@ -148,7 +148,7 @@ function renderCommentsHtml(post) {
             <div class="comment-time muted">${new Date(c.time).toLocaleTimeString()}</div>
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <button class="post-like ${c.userLiked? 'on':''}" onclick="toggleCommentLike(${post.id}, ${c.id})">♡ ${c.likes||0}</button>
+            <button class="post-like ${c.userLiked ? 'on' : ''}" onclick="toggleCommentLike(${post.id}, ${c.id})">♡ ${c.likes || 0}</button>
             <button onclick="replyToComment(${post.id}, ${c.id})">Reply</button>
             ${c.author === 'You' ? `<button onclick="deleteComment(${post.id}, ${c.id})">Delete</button>` : ''}
           </div>
@@ -186,46 +186,46 @@ function addComment(postId) {
   openCommentPost = postId;
   renderPosts();
   // after render, scroll to the new comment and animate it
-  setTimeout(()=>{
+  setTimeout(() => {
     const el = document.getElementById('comment-' + newComment.id);
-    if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.add('new'); setTimeout(()=>el.classList.remove('new'),1200); }
-  },60);
+    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.add('new'); setTimeout(() => el.classList.remove('new'), 1200); }
+  }, 60);
 }
 
-function toggleCommentLike(postId, commentId){
+function toggleCommentLike(postId, commentId) {
   const posts = getPosts();
-  const pIdx = posts.findIndex(p=>p.id==postId);
-  if(pIdx===-1) return;
-  const cIdx = (posts[pIdx].comments||[]).findIndex(c=>c.id==commentId);
-  if(cIdx===-1) return;
+  const pIdx = posts.findIndex(p => p.id == postId);
+  if (pIdx === -1) return;
+  const cIdx = (posts[pIdx].comments || []).findIndex(c => c.id == commentId);
+  if (cIdx === -1) return;
   const comment = posts[pIdx].comments[cIdx];
-  if(comment.userLiked){ comment.userLiked = false; comment.likes = Math.max(0,(comment.likes||1)-1); }
-  else { comment.userLiked = true; comment.likes = (comment.likes||0)+1; }
+  if (comment.userLiked) { comment.userLiked = false; comment.likes = Math.max(0, (comment.likes || 1) - 1); }
+  else { comment.userLiked = true; comment.likes = (comment.likes || 0) + 1; }
   localStorage.setItem('posts', JSON.stringify(posts));
   renderPosts();
 }
 
-function replyToComment(postId, commentId){
+function replyToComment(postId, commentId) {
   const posts = getPosts();
-  const p = posts.find(p=>p.id==postId);
-  if(!p) return;
-  const c = (p.comments||[]).find(c=>c.id==commentId);
-  if(!c) return;
+  const p = posts.find(p => p.id == postId);
+  if (!p) return;
+  const c = (p.comments || []).find(c => c.id == commentId);
+  if (!c) return;
   openCommentPost = postId;
   renderPosts();
-  setTimeout(()=>{
+  setTimeout(() => {
     const input = document.getElementById('comment-input-' + postId);
-    if(!input) return;
+    if (!input) return;
     input.value = `@${c.author} `;
     input.focus();
-  },40);
+  }, 40);
 }
 
-function deleteComment(postId, commentId){
+function deleteComment(postId, commentId) {
   const posts = getPosts();
-  const pIdx = posts.findIndex(p=>p.id==postId);
-  if(pIdx===-1) return;
-  posts[pIdx].comments = (posts[pIdx].comments||[]).filter(c=>c.id!=commentId);
+  const pIdx = posts.findIndex(p => p.id == postId);
+  if (pIdx === -1) return;
+  posts[pIdx].comments = (posts[pIdx].comments || []).filter(c => c.id != commentId);
   localStorage.setItem('posts', JSON.stringify(posts));
   renderPosts();
 }
@@ -239,7 +239,7 @@ function toggleLike(id) {
   renderPosts();
 }
 
-function toggleViewAllComments(postId){
+function toggleViewAllComments(postId) {
   showAllComments[postId] = !showAllComments[postId];
   renderPosts();
 }
